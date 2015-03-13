@@ -30,7 +30,8 @@ namespace TwitchTrayNotifier
         public SettingsForm()
         {
             InitializeComponent();
-
+            //Allow for pressing 'enter' to save username
+            this.AcceptButton = btnSave;
             //Set up the icon image
             twitchIcon = new Icon("twitch.ico");
 
