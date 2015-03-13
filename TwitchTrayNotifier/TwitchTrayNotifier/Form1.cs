@@ -99,11 +99,24 @@ namespace TwitchTrayNotifier
         //Take the username from textbox and store in file for use when program closed and save it
         private void btnSave_Click(object sender, EventArgs e)
         {
-            //On click take txtUsername and save to file
+            //Declare Username equal to the text box on the Settings form
             Username = txtUsername.Text;
-            MessageBox.Show("Your twitch username is: " + Username
+            
+            //Check that the user entered a value for username
+            if (Username != "")
+            {
+                //Notify user that username is stored, save it to file and then minimize the program
+                MessageBox.Show("Your twitch username is: " + Username
                 + " and is stored for future use.");
-            this.WindowState = FormWindowState.Minimized;
+                this.WindowState = FormWindowState.Minimized;
+
+            }
+            else
+            {
+                //Let the user know that the username isn't valid
+                MessageBox.Show("The username you entered isn't valid, please try again");
+                txtUsername.Text = "";
+            }
                 
         }
         #endregion
