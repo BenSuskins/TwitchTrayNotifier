@@ -74,13 +74,13 @@ namespace TwitchTrayNotifier
         #endregion
 
         #region Context Menu, Quit / Settings Functions
-        //When settings menu item is clicked allow them to enter twitch details
+        //When settingsMenuItem clicked show settings form
         void settingsMenuItem_Click(object sender, EventArgs e)
         {
             this.WindowState = FormWindowState.Normal;
 
         }
-        //When quit menu item is clicked exit the program and dispose of tray icons
+        //When quitMenuItem clicked close application and dispose of notification tray icon
         void quitMenuItem_Click(object sender, EventArgs e)
         {
             twitchIcon.Dispose();
