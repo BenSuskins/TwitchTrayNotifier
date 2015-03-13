@@ -99,7 +99,8 @@ namespace TwitchTrayNotifier
         {
             //On click take txtUsername and save to file
             Username = txtUsername.Text;
-            MessageBox.Show("Your twitch username is: " + Username);
+            MessageBox.Show("Your twitch username is: " + Username
+                + " and is stored for future use.");
             this.WindowState = FormWindowState.Minimized;
                 
         }
