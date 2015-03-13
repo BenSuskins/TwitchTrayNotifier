@@ -62,6 +62,8 @@ namespace TwitchTrayNotifier
             this.WindowState = FormWindowState.Minimized;
             this.ShowInTaskbar = false;
 
+            //Set Username variable to the username stored in file
+
             //Start up thread to check if channel live
             twitchLiveWorkerThread = new Thread(new ThreadStart(TwitchChannelLiveThread));
             twitchLiveWorkerThread.Start();
