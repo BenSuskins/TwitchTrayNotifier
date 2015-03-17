@@ -86,12 +86,41 @@ namespace TwitchTrayNotifier
             twitchIcon.Dispose();
             this.Close();
         }
-        #endregion
-
-        #region Thread to check if live
+ #region Thread to check if live
         private void TwitchChannelLiveThread()
         {
+            try
+            {
+                //Thread runs repeatedly as it has now way to end
+                while (true)
+                {
+                    //Checks to see if user is live
+                    string sUrl = "https://api.twitch.tv/kraken/streams/" + Username;
+                    HttpWebRequest wRequest = (HttpWebRequest)HttpWebRequest.Create(sUrl);
+                    wRequest.ContentType = "application/json";
+                    wRequest.Accept = "application/vnd.twitchtv.v3+json";
+                    wRequest.Method = "GET";    
 
+                    dynamic wResponse = wRequest.GetResponse().GetResponseStream();
+                    StreamReader reader = new StreamReader(wResponse);
+                    dynamic res = reader.ReadToEnd();
+                    reader.Close();
+                    wResponse.Close();
+                            
+                    //If they are live shows a balloon notification saying said user is live
+                    if (res.Contains("display_name"))
+                    {
+                        //Set a BalloonTip to show which channel is live
+                        twitchActiveTray.BalloonTipTitle = "A channel is now live";
+                        twitchActiveTray.ShowBalloonTip(10000);
+                    } 
+                    //Sleep for 1 minute then check if live again
+                    Thread.Sleep(60000);
+                }
+            }
+            catch (ThreadAbortException tbe)
+            {
+            }
         }
         #endregion
 
