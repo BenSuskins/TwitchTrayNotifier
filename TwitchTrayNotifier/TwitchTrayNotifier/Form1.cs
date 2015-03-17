@@ -9,10 +9,12 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Threading;
+using System.Net;
+using System.IO;
 #endregion
 ///Twitch Live stream notifier program
 ///By Ben Suskins 12/03/15
-///Version 0.1
+///Version 0.5
 ///Known Issues:
 ///-Only works for the username that was entered in the Settings Form
 namespace TwitchTrayNotifier
@@ -41,7 +43,7 @@ namespace TwitchTrayNotifier
             twitchActiveTray.Visible = true;
 
             //Create context menu items to the notification tray icon
-            MenuItem progNameMenuItem = new MenuItem("Twitch Live Notifier - By Ben Suskins 2015 V0.1");
+            MenuItem progNameMenuItem = new MenuItem("Twitch Live Notifier - By Ben Suskins 2015 V0.5");
             MenuItem breakMenuItem = new MenuItem("-");
             MenuItem settingsMenuItem = new MenuItem("Settings");
             MenuItem quitMenuItem = new MenuItem("Quit");
@@ -86,7 +88,8 @@ namespace TwitchTrayNotifier
             twitchIcon.Dispose();
             this.Close();
         }
- #region Thread to check if live
+        #endregion
+        #region Thread to check if live
         private void TwitchChannelLiveThread()
         {
             try
@@ -99,21 +102,22 @@ namespace TwitchTrayNotifier
                     HttpWebRequest wRequest = (HttpWebRequest)HttpWebRequest.Create(sUrl);
                     wRequest.ContentType = "application/json";
                     wRequest.Accept = "application/vnd.twitchtv.v3+json";
-                    wRequest.Method = "GET";    
+                    wRequest.Method = "GET";
 
                     dynamic wResponse = wRequest.GetResponse().GetResponseStream();
                     StreamReader reader = new StreamReader(wResponse);
                     dynamic res = reader.ReadToEnd();
                     reader.Close();
                     wResponse.Close();
-                            
+
                     //If they are live shows a balloon notification saying said user is live
                     if (res.Contains("display_name"))
                     {
                         //Set a BalloonTip to show which channel is live
-                        twitchActiveTray.BalloonTipTitle = "A channel is now live";
+                        twitchActiveTray.BalloonTipTitle = "A channel is now live!";
+                        twitchActiveTray.BalloonTipText = Username + " is now live";
                         twitchActiveTray.ShowBalloonTip(10000);
-                    } 
+                    }
                     //Sleep for 1 minute then check if live again
                     Thread.Sleep(60000);
                 }
@@ -130,7 +134,7 @@ namespace TwitchTrayNotifier
         {
             //Declare Username equal to the text box on the Settings form
             Username = txtUsername.Text;
-            
+
             //Check that the user entered a value for username
             if (Username != "")
             {
@@ -146,7 +150,7 @@ namespace TwitchTrayNotifier
                 MessageBox.Show("The username you entered isn't valid, please try again");
                 txtUsername.Text = "";
             }
-                
+
         }
         #endregion
 
