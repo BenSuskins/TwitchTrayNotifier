@@ -14,7 +14,7 @@ using System.Threading;
 ///By Ben Suskins 12/03/15
 ///Version 0.1
 ///Known Issues:
-///-Doesn't Work
+///-Only works for the username that was entered in the Settings Form
 namespace TwitchTrayNotifier
 {
     public partial class SettingsForm : Form
