@@ -1,4 +1,4 @@
-﻿#region Imports
+#region Imports
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -81,6 +81,7 @@ namespace TwitchTrayNotifier
             System.IO.StreamReader myFile = new System.IO.StreamReader("E:\\username.txt"); //Set to actual location for the text document
             Username = myFile.ReadToEnd();
             myFile.Close();
+            txtUsername.Text = Username;
 
             //Start up thread to check if channel live
             twitchLiveWorkerThread = new Thread(new ThreadStart(TwitchChannelLiveThread));
@@ -168,6 +169,7 @@ namespace TwitchTrayNotifier
                 System.IO.StreamWriter myFile = new System.IO.StreamWriter("E:\\username.txt"); //Need to set actual location for file
                 myFile.WriteLine(Username);
                 myFile.Close();
+                this.Hide();
             }
             else
             {
