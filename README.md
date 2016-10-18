@@ -6,4 +6,5 @@ This application makes use of background threads which update once a minute, it 
 This application runs mainly in the background with a task menu icon available to change settings such as the channel you want to be notified about.
 
 Planned Features:
+
 -Enter own twitch channel then the program will find your followers and then check them one by one rather than just one selected channel.
